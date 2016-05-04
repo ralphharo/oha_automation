@@ -1,17 +1,3 @@
-### ##TEST
-node.name: "{{ cluster_name }}/{{ inventory_hostname }}"
-cluster.name: "{{ cluster_name }}"
-
-path.data: {{ elasticsearch.data }}
-
-discovery.zen.minimum_master_nodes: {% for host in groups[''] %}{% if loop.last %}{{ loop.index }}{% endif %}{% endfor %}
-
-discovery.zen.ping.multicast.enabled: false
-
-{% set flag=0 %}
-
-discovery.zen.ping.unicast.hosts: [{% for host in groups['cluster_name'] %}{% if inventory_hostname != host %}{% if not loop.first and flag == 1 %},{% else %} {% set flag=1 %}{% endif %}"{{ host }}"{% endif %}{% endfor %}]
-## ENDTEST ###
 ---
 bootstrap: 
   mlockall: true
@@ -53,7 +39,7 @@ node:
   data: dataBoolean
   master: masterBoolean
   max_local_storage_nodes: 1
-  name: "{{ cluster_name }}/{{ inventory_hostname }}"
+  name: "{{ instName }}"
 path: 
   data: /usr/share/elasticsearch
   logs: /var/log/elasticsearch
@@ -67,3 +53,18 @@ threadpool:
   search: 
     queue_size: 100
     size: 20
+
+# ### ##TEST
+# node.name: "{{ instName }}"
+# cluster.name: "{{ clusterName }}"
+# 
+# path.data: {{ elastic_data }}
+# 
+# discovery.zen.minimum_master_nodes: 1
+# 
+# discovery.zen.ping.multicast.enabled: false
+# 
+# {% set flag=0 %}
+# 
+# discovery.zen.ping.unicast.hosts: [{% for host in groups['PICES'] %}{% if inventory_hostname != host %}{% if not loop.first and flag == 1 %},{% else %} {% set flag=1 %}{% endif %}"{{ host }}"{% endif %}{% endfor %}]
+# ## ENDTEST ###

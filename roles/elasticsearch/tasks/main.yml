@@ -9,12 +9,12 @@
      set_fact:
          masterBoolean: "false"
      when: node_type == "worker"
-          
+        
    - name: Include elasticsearch.yml template
      template: 
        src: roles/elasticsearch/templates/elasticsearch.yml.template
        dest: "{{ elastic_conf }}/elasticsearch.yml"
-
+       
    - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='privateIp' replace='{{ privateIp }}'"
 
    - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='masterPrivateIp' replace='{{ masterPrivateIp }}'"

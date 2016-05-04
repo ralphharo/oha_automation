@@ -3,49 +3,52 @@
   sudo: True 
   vars:
     artifact: 'elasticsearch-2.3.0.rpm'
-
+    bucket_name: "oharelease-artifacts"
+    cluster_name: "PICES"
      
   pre_tasks:
    - include_vars: ec2_vars/config.yml
    - include_vars: ec2_vars/elasticConfig.yml
+   - include_vars: /etc/ansible/key.yml  #config file for aws keys
    
+   - set_fact:
+       masterPrivateIp={{ privateIp }}
+     when: node_type == "master" 
+      
   roles:
-    - s3
+#    - s3
     
   tasks:
   
-   - name: Check if Package is installed
-     command: rpm -q elasticsearch
-     register: is_installed
-     failed_when: is_installed.rc > 0
-     changed_when: no
-     ignore_errors: true
+#   - name: Check if Package is installed
+#     command: rpm -q elasticsearch
+#     register: is_installed
+#     failed_when: is_installed.rc > 0
+#     changed_when: no
+#     ignore_errors: true
      
 #   - service: name=elasticsearch state=stopped
 #     when: is_installed.rc == 0
 #     ignore_errors: true
    
-   - name: clean elasticsearch rpm
-     command: rpm -e elasticsearch
+#   - name: clean elasticsearch rpm
+#     command: rpm -e elasticsearch
 #     when: is_installed.rc == 0
      
-   - name: install elasticsearch rpm
-     yum: "name={{ oha_artifacts }}/{{ artifact }}"
-
-   - file: "path=/usr/share/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
-
-   - file: "path=/var/run/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
-
-   - file: "path=/var/lib/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
-   
-   - file: "path=/var/log/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
-   
-   - file: "path=/etc/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
+#   - name: install elasticsearch rpm
+#     yum: "name={{ oha_artifacts }}/{{ artifact }}"
+#
+#   - file: "path=/usr/share/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
+#
+#   - file: "path=/var/run/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
+#
+#   - file: "path=/var/lib/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
+#   
+#   - file: "path=/var/log/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
+#   
+#   - file: "path=/etc/elasticsearch recurse=yes state=directory  owner={{ ec2_user }} group={{ ec2_user }} mode=0777"
       
 #   - include: roles/elasticsearch/tasks/elasticPlugins.yml artifact='elastic-armor-2.3.0.zip'
    
    - include: roles/elasticsearch/tasks/main.yml
    
-   
-
-

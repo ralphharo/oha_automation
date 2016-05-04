@@ -9,8 +9,6 @@
          
    - file: "path={{ oha_artifacts }} recurse=yes state=directory mode=0777"
      when: ohaDir.stat.exists == False
-
-   - debug: msg="{{ aws_access_key }}"
      
    - s3: bucket="{{ bucket_name }}"
        region="{{ region }}"
