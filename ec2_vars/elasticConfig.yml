@@ -2,13 +2,12 @@
 #############                    ELASTIC VARIABLES 
 #ClusterType - standalone, master, worker
 elastic_type: standalone
-clusterName: BIA-QA
+
+clusterName: BIA-QA     # elasticsearch cluster name
+cluster_name:           # ec2 cluster name
 
 dataBoolean: "true"
 masterBoolean: "true"
-
-#Elasticsearch Master
-#masterPrivateIp: 172.31.28.27
 
 # Elasticsearch home directory
 elastic_home: /usr/share/elasticsearch
