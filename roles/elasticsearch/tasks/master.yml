@@ -1,0 +1,28 @@
+---
+       
+   - name: set cluster.name
+     lineinfile: >
+       dest=/etc/elasticsearch/elasticsearch.yml
+       line='cluster.name: BIA_QA'
+       regexp='^cluster.name:'
+       insertafter='^cluster.name'    
+  
+   - name: set node.name
+     lineinfile: >
+       dest=/etc/elasticsearch/elasticsearch.yml
+       line='node.name: BIA_QA_node'
+       regexp='^node.name:'
+       insertafter='^node.name'
+      
+   - name: set publicDns
+     lineinfile: >
+       dest=/etc/elasticsearch/elasticsearch.yml
+       line='network.publish_address: {{ publicDns }}'
+       regexp='^network.publish_address:'
+       insertafter='^network.publish_address:'       
+      
+#   - name: Update elasticsearch.yml privateIp
+   - replace: dest={{ elastic_conf }}/elasticsearch.yml regexp='privateIp' replace='{{ privateIp }}' 
+     
+#   - name: Update elasticsearch.yml publicIp
+   - replace: dest={{ elastic_conf }}/elasticsearch.yml regexp='publicIp' replace='{{ publicIp }}' 

@@ -1,0 +1,49 @@
+#CLuster builder variables - Modify as needed
+cluster_name: myCluster
+clusterInventoryScript: "~/playbookFinal/utils/clusterInventory.sh"
+owner: "user@orionhealth.com"
+
+ec2_image: "ami-de1802bf"
+ec2_keypair: "OHA-QA-Linux1"
+ec2_security_group: ['sg-e44ce580', 'sg-6dd47b09', 'sg-55d47b31', 'sg-21de7145']
+ec2_instance_type: "m3.xlarge"
+ec2_subnet_ids: ['subnet-e515e892']
+ec2_region: "us-west-2"
+ec2_ssh_user: "ec2-user"
+user: qa
+aws_env: analytics
+nodeMaster: master
+nodeWorker: worker
+autoshutdown: disabled
+
+# Modify cluster size by adding or removing node definitions. clusterBuilder will loop through these definitions.
+ec2_instances:
+  - name: "{{ cluster_name }}"
+    tags: 
+      Name: "{{ cluster_name }}_Master"
+      user: "{{ user }}"
+      aws_env: "{{ aws_env }}"
+      auto-shutdown: "{{ autoshutdown }}" 
+      owner: "{{ owner }}"
+      node_type: "{{ nodeMaster }}"
+      cluster_name: "{{ cluster_name }}"
+ 
+  - name: "{{ cluster_name }}"
+    tags: 
+      Name: "{{ cluster_name }}_Worker1"
+      user: "{{ user }}"
+      aws_env: "{{ aws_env }}"
+      auto-shutdown: "{{ autoshutdown }}" 
+      owner: "{{ owner }}"
+      node_type: "{{ nodeWorker }}"
+      cluster_name: "{{ cluster_name }}"
+            
+  - name: "{{ cluster_name }}"
+    tags: 
+      Name: "{{ cluster_name }}_Worker2"
+      user: "{{ user }}"
+      aws_env: "{{ aws_env }}"
+      auto-shutdown: "{{ autoshutdown }}" 
+      owner: "{{ owner }}"
+      node_type: "{{ nodeWorker }}"
+      cluster_name: "{{ cluster_name }}"

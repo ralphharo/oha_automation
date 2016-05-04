@@ -1,0 +1,23 @@
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  
+- name: terminate old instances
+  hosts: all
+  tasks:
+    - action: ec2_facts
+    - debug: msg= "{{ hostvars[inventory_hostname]}}"
+    - name: terminating instances
+      local_action:
+        module: ec2
+        state: 'absent'
+        region: 'us-west-2'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+
+#    - name: terminating instances
+#      local_action:
+#        module: ec2
+#        state: 'absent'
+#        region: 'us-west-2'
+#        instance_ids: "{{ ansible_ec2_instance_id }}"

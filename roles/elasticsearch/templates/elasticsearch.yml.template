@@ -1,0 +1,69 @@
+### ##TEST
+node.name: "{{ cluster_name }}/{{ inventory_hostname }}"
+cluster.name: "{{ cluster_name }}"
+
+path.data: {{ elasticsearch.data }}
+
+discovery.zen.minimum_master_nodes: {% for host in groups[''] %}{% if loop.last %}{{ loop.index }}{% endif %}{% endfor %}
+
+discovery.zen.ping.multicast.enabled: false
+
+{% set flag=0 %}
+
+discovery.zen.ping.unicast.hosts: [{% for host in groups['cluster_name'] %}{% if inventory_hostname != host %}{% if not loop.first and flag == 1 %},{% else %} {% set flag=1 %}{% endif %}"{{ host }}"{% endif %}{% endfor %}]
+## ENDTEST ###
+---
+bootstrap: 
+  mlockall: true
+cluster: 
+  name: clusterName
+discovery: 
+  zen: 
+    minimum_master_nodes: 1
+    ping: 
+      unicast: 
+        hosts: 
+             - masterPrivateIp
+http: 
+  enabled: true
+  port: 9200
+index: 
+  number_of_replicas: 0
+  number_of_shards: 1
+  refresh_interval: 15s
+  routing: 
+    allocation: 
+      total_shards_per_node: 2
+  translog: 
+    flush_threshold_ops: 50000
+indices: 
+  fielddata: 
+    cache: 
+      size: 15%
+  memory: 
+    index_buffer_size: 50%
+    min_index_buffer_size: 96mb
+    min_shard_index_buffer_size: 12mb
+  queries: 
+    cache: 
+      size: 15%
+network: 
+  host: privateIp
+node: 
+  data: dataBoolean
+  master: masterBoolean
+  max_local_storage_nodes: 1
+  name: "{{ cluster_name }}/{{ inventory_hostname }}"
+path: 
+  data: /usr/share/elasticsearch
+  logs: /var/log/elasticsearch
+threadpool: 
+  bulk: 
+    queue_size: 300
+    size: 60
+  index: 
+    queue_size: 100
+    size: 20
+  search: 
+    queue_size: 100
+    size: 20

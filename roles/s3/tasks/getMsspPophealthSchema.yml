@@ -1,0 +1,15 @@
+---
+  
+   - file: "path={{ ec2_home }}/oha_artifacts recurse=yes state=directory mode=0777"
+     
+   - s3: bucket="{{ bucket_name }}"
+       region="{{ region }}"
+       aws_access_key="{{ aws_access_key }}"
+       aws_secret_key="{{ aws_secret_key }}"
+       object="{{ item }}.master.latest"
+       dest="{{ ec2_home }}/oha_artifacts/{{ item }}"
+       mode=get
+     with_items:
+        - "{{ mssp_filename }}"
+        - "{{ pophealth_filename }}"
+        - "{{ schema_filename }}"

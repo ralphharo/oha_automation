@@ -1,0 +1,14 @@
+#S3 variables
+s3filename: "master"
+
+region: us-west-2
+bucket_name: "oharelease-artifacts"
+ec2_home: /home/ec2-user
+oha_artifacts: "{{ ec2_home }}/oha_artifacts"
+
+
+
+
+
+
+

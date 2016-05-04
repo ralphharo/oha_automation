@@ -1,0 +1,25 @@
+
+cluster.name:
+marvel.agent.enabled: true
+# Force all memory to be locked, forcing the JVM to never swap
+bootstrap.mlockall: true
+discovery.zen.ping.unicast.hosts: ["masterPrivateIp"]
+
+#node.name: "BIA-Dev node"
+node.master: false
+node.data: true
+node.max_local_storage_nodes: 1
+
+
+
+# Indexing Settings for Writes
+index.refresh_interval: 5s
+index.number_of_replicas: 1
+index.number_of_shards: 4
+
+
+discovery.zen.ping.multicast.enabled: false
+#network.publish_address: masterPublicIp
+#network.publish_host: localPrivateIp
+#network.bind_host: localPrivateIp
+http.cors.enabled: true

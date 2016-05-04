@@ -1,0 +1,25 @@
+#LOCAL VARIABLES
+releases: "/Users/ralphh/Documents/configuration/releases"
+localUtils: "/Users/ralphh/ansible/utils"
+ansible_home: "/Users/ralphh/ansible"
+
+      
+#REMOTE VARIABLES
+oha_home: "/opt"
+oha_artifacts: "{{ oha_home }}/oha_artifacts"
+ohp_home: "/opt/orionhealth/OrionHealthPlatform"
+java_home: "{{ ohp_home }}/jre"
+ec2_user: "ec2-user"
+ec2_home: "/home/ec2-user"
+
+deploy_home: "{{ ec2_home }}/deploy"
+schema_home: "{{ deploy_home }}/schema"
+
+ohp_admin: "admin"
+ohp_password: "b"
+
+orion_user: "Orion"
+orion_group: "Orion"
+
+slaveIp: [172.31.27.30,172.31.20.219]
+masterPrivateIp: 172.31.17.88

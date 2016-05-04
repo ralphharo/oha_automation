@@ -1,0 +1,12 @@
+---  
+- hosts: localhost  
+  gather_facts: no    
+  vars:  
+    region: us-west-2
+    name: Qa 
+  tasks:  
+    - name: get instance id
+      command: aws ec2 describe-instances --filter Name=tag:Name,Values={{ name }} 
+               --query 'Reservations[0].Instances[0].InstanceId' --output text
+      register: instanceid
+

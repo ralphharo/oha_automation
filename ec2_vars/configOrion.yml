@@ -1,0 +1,55 @@
+#LOCAL VARIABLES
+releases: "/Users/ralphh/Documents/configuration/releases"
+localArtifacts: "/Users/ralphh/ansible/ansibleArtifacts"
+ansible_home: "/Users/ralphh/ansible"
+instanceIds: "/etc/ansible/orionhosts"
+region: us-west-2
+
+elasticsearch_version: "2.3.0"
+elasticsearch_build: "elasticsearch-{{ elasticsearch_version }}"
+
+spark_build: "spark-1.5.1-bin-hadoop2.4" 
+      
+#REMOTE VARIABLES
+centos_home: "/opt"
+oha_home: "/opt"
+ohp_home: "/opt/orionhealth/OrionHealthPlatform"
+
+certs_home: "{{ oha_home }}/certs"
+
+spark_home: "{{ oha_home }}/{{ spark_build }}"
+pophealth_home: "{{ oha_home }}/pophealth-loaders"
+
+#############                    ELASTIC VARIABLES 
+#ClusterType - standalone, master, worker
+elastic_type: standalone
+cluster_name: BIA_CHOLLAS
+
+#Elasticsearch Master
+masterPrivateIp: 10.0.5.237
+masterPublicIp: 52.38.236.170
+
+# Elasticsearch home directory
+elastic_home: /usr/share/elasticsearch
+# Elasticsearch configuration directory
+elastic_conf: /etc/elasticsearch
+# Elasticsearch data directory
+elastic_data: /var/lib/elasticsearch
+# Elasticsearch logs directory
+elastic_log: /var/log/elasticsearch
+# Elasticsearch work directory
+elastic_work: /tmp/elasticsearch
+# Elasticsearch PID directory
+elastic_pid: /var/run/elasticsearch
+
+
+
+s3filename: "master"
+deploy_home: "{{ ec2_home }}/deploy"
+schema_home: "{{ deploy_home }}/schema"
+
+ohp_admin: "admin"
+ohp_password: "b"
+
+orion_user: "Orion"
+orion_group: "Orion"

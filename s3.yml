@@ -1,0 +1,5 @@
+- hosts: all
+  sudo: True 
+
+  roles:
+    - { role: s3, artifact: '2.1.0.zip', bucket_name: "oharelease-artifacts" }

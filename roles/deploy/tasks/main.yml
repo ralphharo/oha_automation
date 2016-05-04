@@ -1,0 +1,39 @@
+---
+   - name: Check profile script exists
+     stat: path="{{ oha_artifacts }}/ohaProfile.sh"
+     register: profile 
+     ignore_errors: True   
+
+   - debug: msg="Copy and deploy scripts if don't exists"
+  
+   - name: Include profile script
+     template: 
+       src: "roles/deploy/templates/ohaProfile.sh"
+       dest: "{{ oha_artifacts }}"
+     when: profile.stat.exists == False
+
+ #  - name: Include profile script
+#     template: 
+#       src: "roles/deploy/templates/gravitonProfile.sh"
+#       dest: "{{ oha_home }}"
+#     when: profile.stat.exists == False and aws_env == "graviton"
+     
+   - lineinfile: dest="{{ ec2_home }}/.bash_profile" regexp="ohaProfile.sh" line="alias setenv='. {{ oha_artifacts }}/ohaProfile.sh'"
+
+#   - name: Check if deploy files exists
+#     stat: path="{{ deploy_home }}/download-and-install.sh"
+#     register: deploy 
+#     ignore_errors: True
+#
+
+#        
+#   - name: Include download scripts
+#     template: 
+#       src: "roles/deploy/templates/{{ item }}"
+#       dest: "{{ deploy_home }}"
+#     with_items:
+#        - download-and-install.sh
+#        - download-from-s3.sh
+#        - installed-applications.xml
+#     when: deploy.stat.exists == False
+        

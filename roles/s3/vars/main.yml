@@ -1,0 +1,13 @@
+# S3 variables
+
+region: us-west-2
+bucket_name: "oharelease-artifacts"
+oha_home: /opt
+oha_artifacts: "{{ oha_home }}/oha_artifacts"
+
+
+
+
+
+
+

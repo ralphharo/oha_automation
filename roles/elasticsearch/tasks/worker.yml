@@ -1,0 +1,18 @@
+---
+  
+   - name: set cluster.name
+     lineinfile: >
+       dest=/etc/elasticsearch/elasticsearch.yml
+       line='cluster.name: {{ cluster_name }}'
+       regexp='^cluster.name:'
+       insertafter='^cluster.name'    
+  
+   - name: set node.name
+     lineinfile: >
+       dest=/etc/elasticsearch/elasticsearch.yml
+       line='node.name: BIA_QA_node'
+       regexp='^node.name:'
+       insertafter='^node.name'
+      
+#   - name: Update elasticsearch.yml privateIp
+   - replace: dest={{ elastic_conf }}/elasticsearch.yml regexp='masterPrivateIp' replace='{{ masterPrivateIp }}' 

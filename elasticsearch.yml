@@ -1,0 +1,12 @@
+- hosts: all
+  sudo: True 
+  vars:
+    elastic_type: 'standalone'
+    
+    
+  pre_tasks:
+   - include_vars: ec2_vars/config.yml  
+   - include_vars: ec2_vars/elasticConfig.yml   
+
+  roles:
+    - elasticsearch

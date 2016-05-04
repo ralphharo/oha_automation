@@ -1,0 +1,9 @@
+ec2_keypair: "OHA-QA-Linux1"
+ec2_security_group: "sg-e44ce580"
+ec2_instance_type: "m3.xlarge"
+ec2_image: "ami-48c3d129"
+ec2_subnet_ids: ['subnet-e515e892']
+ec2_region: "us-west-2"
+ec2_tag_Name: "ANSTEST"
+ec2_tag_user: "qa"
+ec2_volume_size: 30

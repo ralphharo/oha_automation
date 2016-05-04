@@ -1,0 +1,38 @@
+--- 
+
+   - debug: msg="Artifact Name {{ artifact }}"
+   - file: "path={{ oha_artifacts }} recurse=yes state=directory mode=0777"
+
+#   - name: Upload elastic-armor 
+#     copy: "src={{ localArtifacts }}/elastic-armor-2.3.0.zip dest={{ elastic_home }} mode=0644"
+#     ignore_errors: True
+       
+   - s3: bucket="{{ bucket_name }}"
+       region="{{ region }}"
+       aws_access_key="{{ aws_access_key }}"
+       aws_secret_key="{{ aws_secret_key }}"
+       object="{{ artifact }}"
+       dest="{{ elastic_home }}/{{ artifact }}"
+       mode=get
+       
+   - name: Upload elastic-armor 
+     copy: "src={{ localArtifacts }}/elastic-armor-2.3.0.zip dest={{ elastic_home }} mode=0644"
+     ignore_errors: True
+  
+   - name: install elastic armor 
+     command: "{{ elastic_home }}/bin/plugin install file://{{ elastic_home }}/elastic-armor-2.3.0.zip" 
+     args:
+       creates= "{{ elastic_home }}/plugins/elastic-armor"
+     ignore_errors: True      
+
+#   - name: install marvel
+#     command: "{{ elastic_home }}/bin/plugin install marvel-agent"
+#     args:
+#       creates= "{{ elastic_home }}/plugins/marvel"
+#     ignore_errors: True       
+
+   - name: install head 
+     command: "{{ elastic_home }}/bin/plugin install mobz/elasticsearch-head"
+     args:
+       creates= "{{ elastic_home }}/plugins/head"
+     ignore_errors: True

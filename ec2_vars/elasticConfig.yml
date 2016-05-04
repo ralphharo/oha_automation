@@ -1,0 +1,45 @@
+
+#############                    ELASTIC VARIABLES 
+#ClusterType - standalone, master, worker
+elastic_type: standalone
+clusterName: BIA-QA
+
+dataBoolean: "true"
+masterBoolean: "true"
+
+#Elasticsearch Master
+#masterPrivateIp: 172.31.28.27
+
+# Elasticsearch home directory
+elastic_home: /usr/share/elasticsearch
+# Elasticsearch configuration directory
+elastic_conf: /etc/elasticsearch
+# Elasticsearch data directory
+elastic_data: /var/lib/elasticsearch
+# Elasticsearch logs directory
+elastic_log: /var/log/elasticsearch
+# Elasticsearch work directory
+elastic_work: /tmp/elasticsearch
+# Elasticsearch PID directory
+elastic_pid: /var/run/elasticsearch
+
+certs_home: /usr/share/elasticsearch/certs
+
+######## SECURITY 
+#es_intermediate_key_path: "/opt/elasticsearch-1.7.2/config"
+#es_intermediate_key: "ESIntermediate.p12"
+#es_intermediate_key_password: "testing"
+#es_private_key_path: "/opt/elasticsearch-1.7.2/config"
+#es_private_key: "ESPrivate.p12"
+#es_private_key_password: "testing"
+
+#s3filename: "master"
+#deploy_home: "{{ ec2_home }}/deploy"
+#schema_home: "{{ deploy_home }}/schema"
+#
+#s3filename: "master"
+
+#region: us-west-2
+#bucket_name: "oharelease-artifacts"
+#ec2_home: /home/ec2-user
+#oha_artifacts: "{{ ec2_home }}/oha_artifacts"

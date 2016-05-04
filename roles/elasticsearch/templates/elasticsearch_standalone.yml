@@ -1,0 +1,51 @@
+marvel.agent.enabled: false
+cluster.name: 
+node.name: 
+node.master: true
+node.data: true
+
+index.number_of_replicas: 0
+index.number_of_shards: 3
+node.max_local_storage_nodes: 1
+
+
+#################################### Index ####################################
+# Set this property to true to lock the memory:
+ #
+bootstrap.mlockall: true
+
+network.publish_address: 
+network.publish_host: privateIp
+network.bind_host: privateIp
+discovery.zen.ping.multicast.enabled: false
+#Elastic Armor
+elastic_armor.enabled: true
+elastic_armor.ssl.transport.node.enabled: true
+elastic_armor.ssl.transport.node.keystore_type: JKS
+elastic_armor.ssl.transport.node.keystore_filepath: /opt/certs/eskeystore
+elastic_armor.ssl.transport.node.keystore_password: testing
+# elastic_armor.ssl.transport.node.private_key_filepath: 
+elastic_armor.ssl.transport.node.private_key_password: testing
+# elastic_armor.ssl.transport.node.certchain_filepath: 
+elastic_armor.ssl.transport.node.enforce_clientauth: false
+elastic_armor.ssl.transport.node.truststore_type: JKS
+elastic_armor.ssl.transport.node.truststore_filepath: /opt/certs/estruststore
+elastic_armor.ssl.transport.node.truststore_password: testing
+elastic_armor.ssl.transport.node.encforce_hostname_verification: true
+elastic_armor.ssl.transport.node.encforce_hostname_verification.resolve_host_name: true
+# Enable or disable rest layer security (https)
+elastic_armor.ssl.transport.http.enabled: true
+elastic_armor.ssl.transport.http.keystore_type: JKS
+elastic_armor.ssl.transport.http.openssl_enabled: true
+# Preferred SSL/TLS protocol, i.e., SSLv3
+elastic_armor.ssl.transport.http.preferred_protocol: TLSv1.2
+elastic_armor.ssl.transport.http.preferred_algorithms: TLS_RSA_WITH_AES_128_CBC_SHA, SSL_RSA_WITH_DES_CBC_SHA
+elastic_armor.ssl.transport.http.keystore_filepath: /opt/certs/eskeystore
+elastic_armor.ssl.transport.http.keystore_password: testing
+# elastic_armor.ssl.transport.http.private_key_filepath: 
+elastic_armor.ssl.transport.http.private_key_password: testing
+# elastic_armor.ssl.transport.http.certchain_filepath: 
+elastic_armor.ssl.transport.http.enforce_clientauth: false
+elastic_armor.ssl.transport.http.truststore_type: JKS
+elastic_armor.ssl.transport.http.truststore_filepath: /opt/certs/estruststore
+elastic_armor.ssl.transport.http.truststore_password: testing

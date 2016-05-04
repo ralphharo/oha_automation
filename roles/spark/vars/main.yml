@@ -1,0 +1,23 @@
+#Spark variables
+artifact: 'spark-1.6.0-bin-hadoop2.4.tgz'
+spark_build: "spark-1.6.0-bin-hadoop2.4"
+oha_home: /opt
+spark_home: "{{ oha_home }}/{{ spark_build }}"
+pophealth_home: "{{ oha_home }}/pophealth-loaders"
+oha_artifacts: "{{ oha_home }}/oha_artifacts"
+
+#pophealth-loaders variables
+
+sparkKeyStoreName: spark-keystore.jks
+sparkTrustStoreName: truststore.jks
+sparkPrivateKeyPass: testing
+sparkKeyStorePass: testing
+sparkTrustStorePass: testing
+
+certificate_home: /opt/certs
+sparkKeyStorePath: "{{ certificate_home }}/{{ sparkKeyStoreName }}"
+sparkTrustStorePath: "{{ certificate_home }}/{{ sparkTrustStoreName }}"
+
+eskeyStorePath: "{{ certificate_home }}/{{ eskeyStoreName }}"
+estrustStorePath: "{{ certificate_home }}/{{ estrustStoreName }}"
+

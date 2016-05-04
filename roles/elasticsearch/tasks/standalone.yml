@@ -1,0 +1,15 @@
+- hosts: all
+  sudo: True 
+  
+  tasks:
+   
+   - stat: "path={{ certs_home }}"
+     register: certs
+     
+   - file: "path={{ certs_home }} state=directory mode=0755"
+     when: certs.stat.isdir is not defined
+
+   - copy: "src={{ es_intermediate_key }} dest={{ certs_home }} owner={{ ec2-user }} group={{ ec2-user }} mode=0755"
+
+   - copy: "src={{ es_private_key }} dest={{ certs_home }} owner={{ ec2-user }} group={{ ec2-user }} mode=0755"
+         

@@ -1,0 +1,26 @@
+#LOCAL VARIABLES
+releases: "/Users/ralphh/Documents/configuration/releases"
+localArtifacts: "/Users/ralphh/ansible/ansibleArtifacts"
+ansible_home: "/Users/ralphh/ansible"
+
+#REMOTE VARIABLES
+oha_home: "/opt"
+ohp_home: "/opt/orionhealth/OrionHealthPlatform"
+java_home: "{{ ohp_home }}/jre"
+
+ec2_home: "/home/ec2-user"
+
+certs_home: "{{ oha_home }}/certs"
+
+spark_home: "{{ oha_home }}/{{ spark_build }}"
+pophealth_home: "{{ oha_home }}/pophealth-loaders"
+
+#AWS / S3
+bucket_name: oha-build-results
+region: us-west-2 
+
+s3_build_version: 2.3.0
+
+mssp_filename: MSSP-Solution-{{ s3_build_version }}.beta.zip
+pophealth_filename: pophealth-loaders-development-package.tar.gz
+schema_filename: schema.tar.gz
