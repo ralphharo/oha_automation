@@ -15,11 +15,11 @@ ec2_home: "/home/ec2-user"
 deploy_home: "{{ ec2_home }}/deploy"
 schema_home: "{{ deploy_home }}/schema"
 
-ohp_admin: "admin"
-ohp_password: "b"
+ohp_admin: 
+ohp_password:
 
-orion_user: "Orion"
-orion_group: "Orion"
+orion_user: 
+orion_group: 
 
 slaveIp: [172.31.27.30,172.31.20.219]
 masterPrivateIp: 172.31.17.88
