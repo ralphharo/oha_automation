@@ -1,0 +1,17 @@
+---
+# Build slaveIp and masterIp files
+   - command: "aws ec2 describe-instances --filters 'Name=tag:cluster_name,Values={{ cluster_name }}' 'Name=tag:node_type,Values=worker' --query 'Reservations[].Instances[].[PrivateIpAddress]'  --output text"
+     delegate_to: 127.0.0.1
+     sudo: false
+     run_once: true
+     register: outputSlave 
+
+   - local_action: copy content={{ outputSlave.stdout }} dest=roles/spark/files/slaveIp.yml 
+
+   - command: "aws ec2 describe-instances --filters 'Name=tag:cluster_name,Values={{ cluster_name }}' 'Name=tag:node_type,Values=master' --query 'Reservations[].Instances[].[PrivateIpAddress]'  --output text"
+     delegate_to: 127.0.0.1
+     sudo: false
+     run_once: true
+     register: outputMaster  
+
+   - local_action: "copy content='masterPrivateIp: {{ outputMaster.stdout }}' dest=roles/spark/files/masterIp.yml"

@@ -12,6 +12,7 @@ java_home: "{{ ohp_home }}/jre"
 ec2_user: "ec2-user"
 ec2_home: "/home/ec2-user"
 
+
 deploy_home: "{{ ec2_home }}/deploy"
 schema_home: "{{ deploy_home }}/schema"
 
@@ -20,6 +21,3 @@ ohp_password: "b"
 
 orion_user: "Orion"
 orion_group: "Orion"
-
-slaveIp: [172.31.27.30,172.31.20.219]
-masterPrivateIp: 172.31.17.88

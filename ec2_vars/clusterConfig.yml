@@ -1,7 +1,7 @@
 #CLuster builder variables - Modify as needed
-cluster_name: myCluster
-clusterInventoryScript: "~/playbookFinal/utils/clusterInventory.sh"
-owner: "user@orionhealth.com"
+cluster_name: JADE
+clusterInventoryScript: "utils/clusterInventory.sh"
+owner: "ralph.haro@orionhealth.com"
 
 ec2_image: "ami-de1802bf"
 ec2_keypair: "OHA-QA-Linux1"

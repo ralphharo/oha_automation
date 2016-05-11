@@ -2,14 +2,14 @@
 bootstrap: 
   mlockall: true
 cluster: 
-  name: clusterName
+  name: {{ cluster_name }}
 discovery: 
   zen: 
     minimum_master_nodes: 1
     ping: 
       unicast: 
         hosts: 
-             - masterPrivateIp
+             - {{ masterPrivateIp }}
 http: 
   enabled: true
   port: 9200
@@ -34,12 +34,12 @@ indices:
     cache: 
       size: 15%
 network: 
-  host: privateIp
+  host: {{ privateIp }}
 node: 
-  data: dataBoolean
-  master: masterBoolean
+  data: {{ dataBoolean }}
+  master: {{ masterBoolean }}
   max_local_storage_nodes: 1
-  name: "{{ instName }}"
+  name: {{ instName }}
 path: 
   data: /usr/share/elasticsearch
   logs: /var/log/elasticsearch
@@ -54,17 +54,3 @@ threadpool:
     queue_size: 100
     size: 20
 
-# ### ##TEST
-# node.name: "{{ instName }}"
-# cluster.name: "{{ clusterName }}"
-# 
-# path.data: {{ elastic_data }}
-# 
-# discovery.zen.minimum_master_nodes: 1
-# 
-# discovery.zen.ping.multicast.enabled: false
-# 
-# {% set flag=0 %}
-# 
-# discovery.zen.ping.unicast.hosts: [{% for host in groups['PICES'] %}{% if inventory_hostname != host %}{% if not loop.first and flag == 1 %},{% else %} {% set flag=1 %}{% endif %}"{{ host }}"{% endif %}{% endfor %}]
-# ## ENDTEST ###

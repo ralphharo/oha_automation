@@ -1,17 +1,26 @@
+- hosts: localhost  
+  vars:
+    cluster_name: JADE
+  tasks:
+   - include: roles/spark/tasks/setClusterIp.yml  
+
 - hosts: all
   user: ec2-user 
   sudo: True 
-     
+       
   vars:
-    artifact: 'spark-1.6.0-bin-hadoop2.4.tgz'   #spark artifact to be downloaded from S3. Its possible to use curl or wget to download from spark repo, for performance i chose this method.
-    bucket_name: "oharelease-artifacts"         #S3 bucket name
+    artifact: 'spark-1.6.0-bin-hadoop2.4.tgz'
+    bucket_name: "oharelease-artifacts"  
+    cluster_name: JADE
     
   pre_tasks:
    - include_vars: ec2_vars/config.yml
    - include_vars: /etc/ansible/key.yml  #config file for aws keys
-        
+   - include_vars: roles/spark/files/masterIp.yml
+    
   roles: 
     - s3 
     - deploy
     - spark
+
   

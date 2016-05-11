@@ -1,4 +1,12 @@
 ---
+   - name: get oha_artifacts directory status
+     stat: path="{{ oha_artifacts }}"
+     register: ohaDir
+     ignore_errors: True
+         
+   - file: "path={{ oha_artifacts }} recurse=yes state=directory mode=0777"
+     when: ohaDir.stat.exists == False
+
    - name: Check profile script exists
      stat: path="{{ oha_artifacts }}/ohaProfile.sh"
      register: profile 
@@ -20,20 +28,5 @@
      
    - lineinfile: dest="{{ ec2_home }}/.bash_profile" regexp="ohaProfile.sh" line="alias setenv='. {{ oha_artifacts }}/ohaProfile.sh'"
 
-#   - name: Check if deploy files exists
-#     stat: path="{{ deploy_home }}/download-and-install.sh"
-#     register: deploy 
-#     ignore_errors: True
-#
 
-#        
-#   - name: Include download scripts
-#     template: 
-#       src: "roles/deploy/templates/{{ item }}"
-#       dest: "{{ deploy_home }}"
-#     with_items:
-#        - download-and-install.sh
-#        - download-from-s3.sh
-#        - installed-applications.xml
-#     when: deploy.stat.exists == False
         

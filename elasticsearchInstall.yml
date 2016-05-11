@@ -4,7 +4,8 @@
   vars:
     artifact: 'elasticsearch-2.3.0.rpm'
     bucket_name: "oharelease-artifacts"
-    cluster_name: 
+    node_type: 'standalone'
+    cluster_name: CHOLLAS_POPHEALTH
      
   pre_tasks:
    - include_vars: ec2_vars/config.yml
@@ -13,7 +14,7 @@
    
    - set_fact:
        masterPrivateIp={{ privateIp }}
-     when: node_type == "master" 
+     when: node_type is defined and node_type == "master" 
       
   roles:
     - s3

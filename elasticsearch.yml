@@ -1,7 +1,8 @@
 - hosts: all
   sudo: True 
   vars:
-    elastic_type: 'standalone'
+    node_type: 'standalone'
+    cluster_name: 
     
     
   pre_tasks:

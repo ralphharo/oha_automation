@@ -9,22 +9,15 @@
      set_fact:
          masterBoolean: "false"
      when: node_type == "worker"
-        
+
+   - name: Define masterPrivateIp
+     set_fact:
+         masterPrivateIp: "{{ privateIp }}"
+     when: node_type == "standalone"
+             
    - name: Include elasticsearch.yml template
      template: 
        src: roles/elasticsearch/templates/elasticsearch.yml.template
        dest: "{{ elastic_conf }}/elasticsearch.yml"
        
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='privateIp' replace='{{ privateIp }}'"
-
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='masterPrivateIp' replace='{{ masterPrivateIp }}'"
-
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='clusterName' replace='{{ clusterName }}'"
-   
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='dataBoolean' replace={{ dataBoolean }}"
-
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='masterBoolean' replace={{ masterBoolean }}"
-   
-   - replace: "dest={{ elastic_conf }}/elasticsearch.yml regexp='False' replace='false'"
-   
    - service: name=elasticsearch state=restarted

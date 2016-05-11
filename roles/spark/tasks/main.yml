@@ -1,10 +1,12 @@
 ---
-# setup spark configuration files
-#   
+# SPARK SETUP
+
+# deploy spark   
    - unarchive: "src={{ oha_artifacts }}/{{ artifact }} dest={{ oha_home }} copy=no owner={{ orion_user }} group={{ orion_group }} mode=0755"
 
    - file: path=/tmp/spark-events state=directory mode=0777 
-   
+
+# spark config files
    - name: Copy spark-defaults.conf from template
      command: "cp {{ spark_home }}/conf/spark-defaults.conf.template {{ spark_home }}/conf/spark-defaults.conf"
  
@@ -17,17 +19,18 @@
        dest: "{{ spark_home }}/conf"    
 
    - lineinfile: dest=/etc/environment regexp='^export SPARK_HOME=' line='export SPARK_HOME="/opt/spark-1.6.0-bin-hadoop2.4/"'
-
-   - name: Update spark-defaults.conf with spark URL - ALL NODES
-     lineinfile: dest={{ spark_home }}/conf/spark-defaults.conf line="spark://{{ masterPrivateIp }}:7077" 
  
  # Update Spark Master configuration   
    - name: Update master with slaves with spark URL 
      lineinfile: dest={{ spark_home }}/conf/slaves line="{{ item }}" insertafter=EOF
-     with_items: "{{ slaveIp }}"
+     with_file: roles/spark/files/slaveIp.yml
      when: 
        node_type == "master"
-          
+     
+   - name: Update spark-defaults.conf with spark URL - ALL NODES
+     lineinfile: dest={{ spark_home }}/conf/spark-defaults.conf line="spark://{{ masterPrivateIp }}:7077"
+  
+ # Update Spark master/worker configuration       
    - name: Include master init file
      template:
        src: "roles/spark/templates/spark-master"
@@ -36,12 +39,6 @@
      when: 
        node_type == "master"       
 
-   - name: start master
-     service: name=spark-master state=restarted
-     when: 
-       node_type == "master"
- 
- # Update Spark Worker configuration
    - name: Include worker init file
      template:
        src: "roles/spark/templates/spark-worker"
@@ -50,37 +47,14 @@
      when: 
        node_type == "worker"       
 
+ # Restart Spark master/worker
    - name: start master
+     service: name=spark-master state=restarted
+     when: 
+       node_type == "master"
+       
+   - name: start worker
      service: name=spark-worker state=restarted
      when: 
        node_type == "worker"
                  
-## OLD WORKING COPY
-#   - name: Copy spark-defaults.conf from template
-#     command: "cp {{ spark_home }}/conf/spark-defaults.conf.template {{ spark_home }}/conf/spark-defaults.conf"
-#
-#   - name: Update spark-defaults.conf with spark URL 
-#     lineinfile: dest={{ spark_home }}/conf/spark-defaults.conf line="spark://{{ masterPrivateIp }}:7077" 
-# 
-#   - name: Copy slaves from template
-#     command: "cp {{ spark_home }}/conf/slaves.template {{ spark_home }}/conf/slaves"
-#
-##   - name: Update slaves with spark URL 
-##     lineinfile: dest={{ spark_home }}/conf/slaves line="{{ privateIp }}" 
-##     when: node_type == "master"
-#     
-#   - name: Update master with slaves with spark URL 
-#     lineinfile: dest={{ spark_home }}/conf/slaves line="{{ item }}" insertafter=EOF
-#     with_items: "{{ slavesIp }}"
-#     when: node_type == "master"
-#     
-#   - name: Include spark-env template
-#     template: 
-#       src: "roles/spark/templates/spark-env.sh"
-#       dest: "{{ spark_home }}/conf"
-#        
-#     
-#   - lineinfile: dest={{ spark_home }}/conf/spark-env.sh regexp="LOCAL_IP=" insertafter="LOCAL_IP=" line="SPARK_LOCAL_IP={{ privateIp }}"
-#   
-#   - lineinfile: dest={{ spark_home }}/conf/spark-env.sh regexp="MASTER_IP=" insertafter="MASTER_IP=" line="SPARK_MASTER_IP={{ masterPrivateIp }}"
-#                
